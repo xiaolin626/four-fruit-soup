@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Log</title>
+    <style>
+        p span{color: #00FFFF;}
+    </style>
+</head>
+<body>
+
+<div>
+    <p>当前文件{$file}
+        <span onclick="beginInterval()" class="begin">开启定时</span>
+        <span onclick="closeInterval()" class="close">关闭定时</span>
+    </p>
+    <input type="hidden" id="hide_file" value="{$file}">
+    <div class="content">
+
+    </div>
+</div>
+
+<script type="text/javascript" src="__admin__/plugins/jquery/jquery.min.js"></script>
+<script>
+    var url="{:url('read')}";
+    var file = "{$file}";
+    var parame = {file:file};
+    var timer = '';
+
+    beginInterval();
+    $(".begin").hide();
+
+    function beginInterval(){
+        timer = setInterval(function () {
+            $.post(url,parame,function (res) {
+                $(".content").html(res.msg);
+            })
+        },3000)
+        $(".begin").hide();
+        $(".close").show();
+    }
+
+
+    function closeInterval() {
+        $(".close").hide();
+        $(".begin").show();
+        clearInterval(timer);
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+{extend name="layout" /}
+
+{block name="style"}
+<link rel="stylesheet" href="__admin__/plugins/upload.css">
+{/block}
+
+{block name="content"}
+    <div class="site-text site-block" style="margin: 15px">
+        <blockquote class="layui-elem-quote">
+            <h1>添加商品</h1>
+        </blockquote>
+        <form class="layui-form" action="/admin/product/addProduct" method="post" enctype="multipart/form-data">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" required="required" value="" lay-verify="required" placeholder="请输入商品名称" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品价格</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="price" required="required" value="" lay-verify="number" placeholder="请输入商品价格" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品库存</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="stock" required="required" value="" lay-verify="number" placeholder="请输入商品库存数量" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品分类</label>
+                <div class="layui-inline">
+                    <select name="category_id" lay-verify="required">
+                        <option value="">请选择一个分类</option>
+                        {volist name="category" id="vo"}
+                            <option value="{$vo.id}">{$vo.name}</option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">商品描述</label>
+                <div class="layui-input-block">
+                    <textarea name="summary" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品图片</label>
+                <div class="layui-box layui-upload-button" >
+                    <input id="file" type="file" lay-verify="required" accept="" name="main_img_url" class="">
+                    <span class="layui-upload-icon"><i class="layui-icon"></i>上传图片</span>
+                </div>
+                <div style="display: inline-block; margin-left: 15px">
+                    仅支持小于<span style="color: red">2M</span>的图片
+                </div>
+                <div id="logo-file-wrap">
+                    <img src="" alt="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">商品属性</label>
+                    <div class="layui-input-inline" >
+                        <input type="text" name="property_name[]" lay-verify="" value="" placeholder="属性名" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid">-</div>
+                    <div class="layui-input-inline" >
+                        <input type="text" name="property_detail[]" lay-verify="" value="" placeholder="属性值" autocomplete="off" class="layui-input">
+                    </div>
+                    <button style="margin-top: 3px" class="add layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon">&#xe608;</i></button>
+
+                </div>
+            </div>
+
+            <div id="demo" class="layui-form-item" style="display: none">
+                <div class="layui-inline" id="father">
+                    <label class="layui-form-label">商品属性</label>
+                    <div class="layui-input-inline" >
+                        <input type="text" name="property_name[]" lay-verify="" value="" placeholder="属性名" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid">-</div>
+                    <div class="layui-input-inline" >
+                        <input type="text" name="property_detail[]" lay-verify="" value="" placeholder="属性值" autocomplete="off" class="layui-input">
+                    </div>
+                    <button style="margin-top: 3px" class="add layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon">&#xe608;</i></button>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">详情图片</label>
+                <div id="T_upload"></div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="formDemo">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+{/block}
+
+{block name="script"}
+<script src="__admin__/js/jquery-1.7.2.min.js"></script>
+<script src="__admin__/plugins/T_upload.js"></script>
+<script src="__admin__/js/mine.js"></script>
+    <script>
+        layui.use(['laydate','form'], function(){
+
+        });
+        $('#file').addImg({
+            target:'#logo-file-wrap',
+            size:2
+        });
+        $.Tupload.init({
+//            url: "product/uploadImage2?md=a",
+            title	  : "图片大小不能超过2M,为使避免图片上传出现问题，请尽量选择完毕图片后再上传",
+            fileNum: 5, // 上传文件数量
+            divId: "T_upload", // div  id
+            accept: "image/jpeg,image/x-png", // 上传文件的类型
+            fileSize  :204800000,     // 上传文件的大小
+            initImg: '__admin__/plugins/images/imgadd.png',
+            file:[],
+            onSuccess: function(data, i) {
+                /*var temp =eval('(' + data.currentTarget.response + ')')
+                 if(temp.fileName != undefined){
+                 $("#img_src"+i).attr('value',temp.fileName);
+                 $("#img_src"+i).attr('name',"upload_img");
+                 }*/
+            },
+            onDelete: function(i) {
+                /*var img_val = $("#img_src"+i).attr("value");
+                 if(img_val != '' && img_val != undefined){
+                 var md = "product";
+                 var img= $.page.getImgUrl(img_val);
+                 $.ajax({
+                 type:"POST",
+                 url: "base/delPic" ,
+                 data : {img:img,id: pid,md:md},
+                 success: function(rel){}
+                 });
+                 }*/
+            }
+        });
+
+        $(document).on('mouseover','.add',function () {
+            layer.tips('点击添加金额',$(this),{
+                tips:[1,'#3595CC'],
+                time:2000
+            });
+        })
+        $(document).on('mouseover','.down',function () {
+            layer.tips('点击删除金额',$(this),{
+                tips:[1,'#ff0000'],
+                time:2000
+            });
+        })
+
+        $(document).on('click','.add',function () {
+            var demo = $('#demo').clone();
+            demo.removeAttr('id');
+            demo.removeAttr('style');
+            demo.find('.add').remove();
+            demo.find('input').attr('lay-verify','number');
+
+            var down = '<button style="margin-top: 3px" class="down layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon">&#xe640;</i></button>';
+            demo.find('#father').append(down);
+
+            $('#demo').before(demo);
+            return false;
+        })
+
+        $(document).on('click','.down',function () {
+            $(this).parent('div').remove();
+            return false;
+        })
+    </script>
+{/block}

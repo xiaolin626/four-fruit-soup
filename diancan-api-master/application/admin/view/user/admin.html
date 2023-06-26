@@ -1,0 +1,168 @@
+{extend name="layout" /}
+
+{block name="content"}
+<style>
+    .bs-bars{
+        width:100%;
+    }
+</style>
+<div style="margin: 15px;">
+    <blockquote class="layui-elem-quote">
+        <h1>后台人员列表</h1>
+    </blockquote>
+
+
+    <div id="toolbar">
+        <a style="float:right;margin-right: 10px" href="{:url('user/addAdmin')}" class="layui-btn layui-btn-normal">添加供应商</a>
+
+        <button id="refresh" class="layui-btn">
+            <i class="fa fa-refresh" data-icon="fa-refresh"></i>
+            刷新表格
+        </button>
+        <div class="layui-input-inline" style="width: 60px">
+            <input id="page" class="layui-input" type="number" value="1" min="1" max="3">
+        </div>
+        <button id="selectPage" class="layui-btn">跳页</button>
+
+    </div>
+    <table id="table"
+           data-toggle="table"
+           data-height="460"
+           data-toolbar="#toolbar"
+           data-pagination="true"
+           data-side-pagination="server"
+           data-page-size="20"
+           data-ajax="ajaxRequest">
+        <thead>
+        <tr>
+            <th data-field="username">用户名</th>
+            <th data-field="tel" >电话</th>
+            <th data-field="email">邮箱</th>
+            <th data-field="realname">真实名字</th>
+
+            <th data-field="ip" >IP</th>
+            <th data-field="is_use" data-formatter="is_use">是否可用</th>
+            <th data-field="login" >登录次数</th>
+            <th data-field="last_time" data-formatter="getLocalTime">最后登录</th>
+            <th data-field="" data-formatter="formAction">操作</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    var $page = $('#page'),
+        $button = $('#selectPage'),
+        $refresh = $('#refresh');
+    $refresh.click(function(){
+        $table.bootstrapTable('refresh');
+    });
+    $button.click(function () {
+        $table.bootstrapTable('selectPage', +$page.val());
+    });
+
+    var $table = $('#table');
+    
+    function is_use(value,row,index) {
+        if( value === 1 ){
+            return '可用';
+        }else{
+            return '已禁止'
+        }
+    }
+
+    function getLocalTime(nS) {
+        var datetime = nS*1000;
+        var date = new Date(datetime);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var year = date.getFullYear(),
+            month = ("0" + (date.getMonth() + 1)).slice(-2),
+            sdate = ("0" + date.getDate()).slice(-2),
+            hour = ("0" + date.getHours()).slice(-2),
+            minute = ("0" + date.getMinutes()).slice(-2),
+            second = ("0" + date.getSeconds()).slice(-2);
+        // 拼接
+        var result = year + "-"+ month +"-"+ sdate +" "+ hour +":"+ minute +":" + second;
+        // 返回
+        return result;
+    }
+
+    function formAction(value,row,index) {
+        var html =  '<a href="/admin/user/editAdmin?id='+row.id+'">修改</a>' +
+            '&nbsp;&nbsp;';
+        if(row.is_use == 1&&row.group_id==1){
+            html +=  '<a onclick="del('+row.id+',0)" >禁用</a>';
+        }else if(row.is_use == 1&&row.group_id==1)
+		{
+            html +=  '<a onclick="del('+row.id+',1)" >启用</a>';
+        }
+         return html;
+    }
+
+    $('#searchSubmit').click(function(){
+        $table.bootstrapTable('selectPage', 1);
+        return false;
+    });
+    //请求数据
+    function getData(data){
+        var json;
+        var form = $('.layui-form').find('input,select');
+        var len = form.length;
+        var req = {};
+        for(var i = 0; i < len; i++){
+            var key = form.eq(i).attr('name');
+            var val = form.eq(i).val();
+            req[key] = val;
+        }
+        req.limit = data.limit;
+        req.offset = data.offset;
+        $.ajax({
+            type:"post",
+            url:"/admin/user/admin",
+            data:req,
+            dataType:"json",
+            async:false,
+            success:function(res){
+                json = res;
+            }
+        });
+        return json;
+    }
+    function ajaxRequest(params){
+        //得到数据
+        var json = getData(params.data);
+        //分配数据
+        params.success({
+            total:json.data.total,
+            rows:json.data.list
+        });
+    }
+
+    function del(id,status) {
+        layer.confirm('你确定要下架此分类么?', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.get('/admin/user/delAdmin',{id:id,status:status},function (mes) {
+                if(mes.code === 200){
+                    layer.alert(mes.msg);
+                    layer.closeAll();
+                    layer.msg(mes.msg);
+                    $table.bootstrapTable('refresh',$page.val());
+                }
+            },'json')
+        });
+    }
+    layui.use(['form', 'laydate'], function() {
+        var form = layui.form(),
+            layer = layui.layer,
+            laydate = layui.laydate;
+
+        form.on('select(country)',function(data){
+            listenSelect(form,data)
+        });
+
+    });
+
+</script>
+{/block}

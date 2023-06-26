@@ -1,0 +1,7 @@
+.idea
+composer.lock
+log/
+*.sh
+runtime/
+application/database.php
+

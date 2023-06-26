@@ -1,0 +1,126 @@
+/* mine/personalData/personalData.wxss */
+
+.con {
+  padding: 60rpx 30rpx 50rpx 30rpx;
+}
+
+.logo {
+  text-align: center;
+  width: 126rpx;
+  height: 126rpx;
+  border-radius: 50%;
+  margin-bottom: 20rpx;
+}
+
+.txt {
+  font-size: 24rpx;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #999;
+  text-align: center;
+  margin-bottom: 60rpx;
+}
+
+
+
+.bottom {
+  box-sizing: border-box;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  background-color: #f8f8f8;
+  padding: 20rpx 30rpx 50rpx 30rpx;
+}
+.savebutton
+{
+position: relative;
+margin-top: 50rpx;
+margin-left: 28rpx;
+  width: 694rpx;
+height: 100rpx;
+background:rgb(123, 177, 177);
+border-radius: 8rpx;
+font-size: 36rpx;
+
+
+}
+.beview
+{
+  width: 695rpx;
+  height: 120rpx;
+
+  position: relative;
+  margin-left: 28rpx;
+  margin-top: 50rpx;
+
+
+background:  #cad1d8;
+border-radius: 20rpx;
+}
+.betext
+{
+  position: absolute;
+  margin-left: 40rpx;
+  margin-top: 48rpx;
+  font-size: 28rpx;
+}
+.bearrow
+{
+
+position: absolute;
+margin-left: 639rpx;
+margin-top: 46rpx;
+
+  width: 28rpx;
+height: 27rpx;
+}
+.content_c {
+  background-color: #cad1d8 !important;
+
+}
+.label_class {
+  font-size: 28rpx;
+ 
+ color: #333333;
+}
+.justtext
+{
+
+font-size: 28rpx;
+
+font-weight: 400;
+color: #333333;
+line-height: 42rpx;
+
+position: absolute;
+margin-left: 232rpx;
+margin-top: 47rpx;
+}
+.beimg
+{
+  position: absolute;
+  right: 80rpx;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-top: 20rpx;
+}
+.fieldview
+{
+  width: 450rpx;
+  position:absolute;
+  margin-left: 205rpx;
+  margin-top: 38rpx;
+  font-size: 30rpx;
+}
+.van-field__label {
+  color: #999 !important;
+}
+
+.border_b {
+  border-bottom: 2rpx solid #f8f8f8;
+}
+.picker
+{
+  font-size:28rpx ;
+}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Log</title>
+</head>
+<body>
+
+<div>
+    <div>日志文件列表</div>
+    {volist name='data' id='item'}
+    <a href="{:url('read',array('file'=>$item))}">{$item}</a>
+    {/volist}
+</div>
+</body>
+</html>

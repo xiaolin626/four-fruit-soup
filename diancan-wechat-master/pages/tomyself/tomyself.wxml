@@ -1,0 +1,32 @@
+<!--mine/personalData/personalData.wxml-->
+<!-- 引入wxs脚本 -->
+
+
+<view class="beview">
+  <text class="betext">昵称</text>
+<input class="fieldview"  value="{{ nickName }}" placeholder="请输入用户名"  bindinput="nickNameChange" ></input>
+</view>
+<view class="beview">
+  <text class="betext">密码</text>
+<input class="fieldview"  value="{{ password }}" placeholder="修改密码 默认位123456"  bindinput="psdChange" ></input>
+</view>
+
+<view class="beview">
+  <text class="betext">手机号</text>
+<input class="fieldview"  value="{{mobile }}" placeholder="修改手机号 11位"  bindinput="mobileChange" ></input>
+</view>
+
+<view class="beview">
+  <van-cell title="性别" class="content_c" value="{{sex>0?'男':'女'}}" border="{{ false }}" title-style="font-size: 28rpx;font-family: PingFang SC;font-weight: 500;color: #999999;" bind:click="showPopup" is-link/>
+
+</view>
+
+<view class="beview">
+  <text class="betext">现金: {{money}}</text>
+  <button class="bebutton" bindtap="toCash">是否提现</button>
+</view>
+
+<button bindtap="toIssue"   class="savebutton">保存</button>
+<!-- 性别弹窗 -->
+<van-popup show="{{ show }}" bind:close="onClose" position="bottom" round>
+  <van-picker columns="{{ columns }}" bind:change="onChange" show-toolbar title="请选择性别" bind:cancel="onClose" bind:confirm="onConfirm" /></van-popup>

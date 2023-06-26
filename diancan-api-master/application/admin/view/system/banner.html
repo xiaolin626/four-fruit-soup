@@ -1,0 +1,155 @@
+{extend name="layout" /}
+
+{block name="content"}
+<style>
+    .bs-bars{
+        width:100%;
+    }
+</style>
+<div style="margin: 15px;">
+    <blockquote class="layui-elem-quote">
+        <h1>Banner列表</h1>
+    </blockquote>
+
+
+    <div id="toolbar">
+        <a style="float:right;margin-right: 10px" href="{:url('system/addBanner')}" class="layui-btn layui-btn-normal">添加Banner</a>
+
+        <button id="refresh" class="layui-btn">
+            <i class="fa fa-refresh" data-icon="fa-refresh"></i>
+            刷新表格
+        </button>
+        <div class="layui-input-inline" style="width: 60px">
+            <input id="page" class="layui-input" type="number" value="1" min="1" max="3">
+        </div>
+        <button id="selectPage" class="layui-btn">跳页</button>
+
+    </div>
+    <table id="table"
+           data-toggle="table"
+           data-height="760"
+           data-toolbar="#toolbar"
+           data-pagination="true"
+           data-side-pagination="server"
+           data-page-size="30"
+           data-ajax="ajaxRequest">
+        <thead>
+        <tr>
+            <th data-field="id">id</th>
+            <th data-field="name">名称</th>
+            <th data-field="image" data-formatter="setimage">图片</th>
+            <th data-field="description">说明</th>
+            <th data-field="sort" data-formatter="setSort">排序</th>
+            <th data-field="status"  data-formatter="status">状态</th>
+            <th data-field="position"  data-formatter="position">显示位置</th>
+            <th data-field="" data-formatter="formAction">操作</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    var $page = $('#page'),
+        $button = $('#selectPage'),
+        $refresh = $('#refresh');
+    $refresh.click(function(){
+        $table.bootstrapTable('refresh');
+    });
+    $button.click(function () {
+        $table.bootstrapTable('selectPage', +$page.val());
+    });
+
+    var $table = $('#table');
+
+    function setimage(value,row,index) {
+        return '<img src="'+value+'" style="height:50px; "/>'
+    }
+
+    function formAction(value,row,index) {
+        return '<a href="/admin/system/editBanner?id='+row.id+'">编辑</a>' +
+            '&nbsp;&nbsp;&nbsp;'+
+           '<a href="/admin/system/delBanner?id='+row.id+'">删除</a>';
+    }
+
+    function status(value,row,index) {
+        if( value === 1 ){
+            return '显示'
+        }else if( value === 0 ){
+            return '隐藏';
+        }
+    }
+    function position(value,row,index) {
+        if( value === 0 ){
+            return '首页'
+        }else if( value === 1 ){
+            return '其他位置';
+        }
+    }
+
+    function setSort(value,row,index) {
+       var html =  '<input  data-id="'+row.id+'" class="layui-input" onblur="postSort(this,'+row.id+')" value="'+value+'" size="10" style="text-align: center;width: 30px;"/>';
+       return html;
+    }
+
+    function postSort(obj,id){
+        var sort = $(obj).val();
+        $.post('/admin/system/postSort',{id:id,sort:sort},function (res){
+            layer.msg(res.msg,{time:1000,icon:1});
+        })
+    }
+
+    $('#searchSubmit').click(function(){
+        $table.bootstrapTable('selectPage', 1);
+        return false;
+    });
+    //请求数据
+    function getData(data){
+        var json;
+        var form = $('.layui-form').find('input,select');
+        var len = form.length;
+        var req = {};
+        for(var i = 0; i < len; i++){
+            var key = form.eq(i).attr('name');
+            var val = form.eq(i).val();
+            req[key] = val;
+        }
+        req.limit = data.limit;
+        req.offset = data.offset;
+        $.ajax({
+            type:"post",
+            url:"/admin/system/bannerAll",
+            data:req,
+            dataType:"json",
+            async:false,
+            success:function(res){
+                json = res;
+            }
+        });
+        return json;
+    }
+    function ajaxRequest(params){
+        //得到数据
+        var json = getData(params.data);
+        //分配数据
+        params.success({
+            total:json.data.total,
+            rows:json.data.list
+        });
+    }
+
+
+    layui.use(['form', 'laydate'], function() {
+        var form = layui.form(),
+            layer = layui.layer,
+            laydate = layui.laydate;
+
+        form.on('select(country)',function(data){
+            listenSelect(form,data)
+        });
+
+    });
+
+</script>
+{/block}

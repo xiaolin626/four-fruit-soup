@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "van-uploader": "@vant/weapp/uploader/index",
+    "van-empty": "@vant/weapp/empty/index",
+    "van-steps": "@vant/weapp/steps/index"
+      
+  },"navigationBarTitleText": "服务界面"
+}

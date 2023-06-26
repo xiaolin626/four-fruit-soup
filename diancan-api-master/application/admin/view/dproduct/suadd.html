@@ -1,0 +1,98 @@
+{extend name="layout" /}
+
+{block name="style"}
+<link rel="stylesheet" href="__admin__/plugins/upload.css">
+{/block}
+
+{block name="content"}
+    <div class="site-text site-block" style="margin: 15px">
+        <blockquote class="layui-elem-quote">
+            <h1>一键添加商品</h1>
+        </blockquote>
+       <form class="layui-form" action="/admin/dproduct/upload_excel" method="post" enctype="multipart/form-data">
+       
+       
+               
+               <div class="layui-form-item">
+                   <label class="layui-form-label">导入excel</label>
+                   <div class="layui-box layui-upload-button" >
+                       <input  name="excel" type="file" class="">
+                       <span class="layui-upload-icon" style="width: 130px;"><i class="layui-icon"></i>上传excel文件</span>
+                   </div>
+                  
+                   <div id="logo-file-wrap">
+                       <img src="" alt="">
+                   </div>
+               </div>
+       
+       
+               <div class="layui-form-item">
+                   <div class="layui-input-block">
+                       <button class="layui-btn " lay-submit="" lay-filter="formDemo" style="width: 80px; text-align: center;">提交</button>
+       				
+                       <button  type="reset" class="layui-btn layui-btn-primary">重置</button>
+       				
+                   </div>
+               </div>
+       
+           </form>
+       	<form class="layui-form" action="/admin/dproduct/excel_data" method="post" enctype="multipart/form-data">
+       	
+       	    <div class="layui-input-block">
+       	        <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="formDemo" style="width: 160px; text-align: center;">导出</button>
+       	    </div>
+       </form>
+         </div>
+{/block}
+
+{block name="script"}
+<script src="__admin__/js/jquery-1.7.2.min.js"></script>
+<script src="__admin__/plugins/T_upload.js"></script>
+<script src="__admin__/js/mine.js"></script>
+    <script>
+	if (res.code == 200) {
+	    layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+	        location.href = "{:url('/admin/product/all')}";
+	    });
+	}
+        layui.use(['laydate','form'], function(){
+
+        });
+        $('#file').addImg({
+            target:'#logo-file-wrap',
+            size:2
+        });
+        $.Tupload.init({
+//            url: "product/uploadImage2?md=a",
+            title	  : "图片大小不能超过2M,为使避免图片上传出现问题，请尽量选择完毕图片后再上传",
+            fileNum: 5, // 上传文件数量
+            divId: "T_upload", // div  id
+            accept: "image/jpeg,image/x-png", // 上传文件的类型
+            fileSize  :204800000,     // 上传文件的大小
+            initImg: '__admin__/plugins/images/imgadd.png',
+            file:[],
+            onSuccess: function(data, i) {
+                /*var temp =eval('(' + data.currentTarget.response + ')')
+                 if(temp.fileName != undefined){
+                 $("#img_src"+i).attr('value',temp.fileName);
+                 $("#img_src"+i).attr('name',"upload_img");
+                 }*/
+            },
+            onDelete: function(i) {
+                /*var img_val = $("#img_src"+i).attr("value");
+                 if(img_val != '' && img_val != undefined){
+                 var md = "product";
+                 var img= $.page.getImgUrl(img_val);
+                 $.ajax({
+                 type:"POST",
+                 url: "base/delPic" ,
+                 data : {img:img,id: pid,md:md},
+                 success: function(rel){}
+                 });
+                 }*/
+            }
+        });
+
+       
+    </script>
+{/block}

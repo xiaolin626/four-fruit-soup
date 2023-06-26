@@ -1,0 +1,16 @@
+/* pages/byquik/byquik.wxss */
+.top{
+ margin-top: 50%;
+}
+.orangebutton
+{
+  color: #FFFF;
+  
+
+  line-height: 10vh;
+  height:10vh;
+    width:80vw;
+  
+    margin-top: 15vh;
+    background-color:rgb(248, 188, 97);
+}

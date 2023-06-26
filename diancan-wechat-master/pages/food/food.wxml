@@ -1,0 +1,250 @@
+<!--pages/category/category.wxml-->
+<import src='../tpls/category/category-tpl.wxml'></import>
+<import src='../tpls/dproducts/dproducts-tpl'></import>
+<wxs src="../food/orderstamp.wxs" module="stamp"></wxs>
+
+
+  <view class="index-top-image" id="bannerHeight">
+      <swiper class="mall-b-swiper" indicator-dots="true" autoplay="true" interval="4000" duration="1000"  indicator-active-color="#F34A51" circular="true" bindchange="">
+        <block wx:for="{{bannerArr}}" wx:key="index" >
+            <swiper-item class="banner-item" bindtap="" >
+                <image class="item-image" src="{{item.image}}" mode="scaleToFill" style="" />
+            </swiper-item>
+        </block>
+      </swiper>
+      <!--image src="../../images/index-top.jpg"></image-->
+  </view>
+
+
+  <view class="top_nav topnavFixed" id="navHeight">
+    <view wx:if="{{role==0}}" class="{{nav_act_content == 1 && role==0 ? 'active' : '' }}" bindtap="choose_nav" data-act='1'>菜品</view>
+    <view wx:if="{{role==1}}" class="{{nav_act_content == 1 && role==1 ? 'active' : '' }}" bindtap="choose_nav" data-act='1'>原料</view>
+   
+    <view wx:if="{{role==1}}" class="{{nav_act_content == 3 ? 'active' : '' }}" bindtap="choose_nav" data-act='3'>订单</view>
+    <view wx:if="{{role==1}}" class="{{nav_act_content == 4 ? 'active' : '' }}" bindtap="choose_nav" data-act='4'>导单</view>
+    <view wx:if="{{role==2}}" class="{{nav_act_content == 5 ? 'active' : '' }}" bindtap="choose_nav" data-act='5'>订单</view>
+    <view class="{{nav_act_content == 2 ? 'active' : '' }}" bindtap="choose_nav" data-act='2'>商家</view>
+  </view>
+
+<view class="mian-box"  wx:if="{{nav_act_content == 1&&role==0}}" >
+
+  <view class="tuijian_box">
+      <view class="tuijian_title">商家推荐</view>
+      <view class="tuijian_piclist">
+        <scroll-view scroll-x style="height: 100%;" scroll-left="scrollleft">
+          <view class="onepic-item">
+            <view class="the_item" wx:for="{{recommendProduct}}" wx:key="index" data-id="{{item.id}}" bindtap="onProductsItemTap">
+              <image src="{{item.main_img_url}}" mode="aspectFill"></image>
+              <view class="info-item">
+                {{item.name}}
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+  </view>
+  <!-- end 商家推荐 -->
+
+  <view class='category-box' id="categoryBoxHeight">
+    <view class="left-box topcatFixed" style="top:{{navHeight}}px;" >
+      <block wx:for="{{categoryTypeArr}}" wx:key='index'>
+        <view wx:if="{{item.id!=12}}" class="menu-item {{currentMenuIndex==index?'selected':''}}" data-id='{{item.id}}' data-index='{{index}}' bindtap='changeCategory'>
+          {{item.name}}
+        </view>
+      </block>
+      <view style="height: 60rpx;"></view>    
+    </view>  <!--左侧nav-->
+      
+     
+    <view class='right-box'>
+      <view class='foods-type-box'>
+        <template is='categorydetail' data='{{categoryInfo:categoryProducts,is_nodata:is_nodata}}'>
+        </template>
+      </view>
+    </view> 
+      
+       
+      <!--右侧内容-->
+    
+  </view> <!--category-box-->
+
+</view>
+<view class="mian-box"  wx:if="{{nav_act_content == 1&&role==1}}" >
+
+<view class="tuijian_box">
+    <view class="tuijian_title">我是店长</view>
+</view>
+<!-- end 商家推荐 -->
+
+<view class='category-box' id="categoryBoxHeight">
+
+   
+  <view class='right-box'>
+      <view class='foods-type-box'>
+        <template is='dproducts' data='{{dproductsInfo:dProduct,is_nodata:is_nodata}}'>
+        </template>
+      </view>
+    </view> 
+    
+     
+    <!--右侧内容-->
+  
+</view> <!--category-box-->
+
+</view>
+<!-- mian box -->
+
+<view class="shoperInfo" wx:if="{{nav_act_content == 2}}">
+  <view class="title">{{sysData.title}}</view>
+  <view class="address">
+    <view>
+        <image src="../../imgs/icon/address.jpg"></image> 
+        <view class="info">{{sysData.ads}}</view>
+    </view>
+    <view>
+      <image src="../../imgs/icon/mobile2.png" style="width: 58rpx;height:58rpx;" bindtap="callMobile"></image>
+    </view>
+  </view>
+
+  <view class="shoperdesc" style="margin-top: 60rpx;">
+    <view class="title">商家信息</view>
+    <view class="desc">商家品类：{{sysData.des}}</view>
+    <view class="desc">营业时间：{{sysData.work_time}}</view>
+  </view>
+
+  <view class="shianjian" style="margin-top: 60rpx;">
+    <view class="title">商家服务</view>
+    <view class="desc">
+      <text>食安检</text>
+      该商户已经购买食品安全责任险，食品安全有保障
+    </view>
+  </view>
+  <view class="shianjian" style="margin-top: 60rpx;"></view>
+</view>
+
+<view class="mian-box"  wx:if="{{nav_act_content == 3}}" >
+
+<view class="tuijian_box">
+    <view class="tuijian_title">我是店长·订单页面</view>
+</view>
+<!-- end 商家推荐 -->
+
+
+
+   
+  <view class="item-main">
+    <!-- 没有数据时候 -->
+     <view class="no_data" wx:if="{{orderArr.length == 0}}">
+      <image src="../../imgs/icon/none.jpg"></image>
+     </view>
+      <block wx:for="{{orderArr}}">
+        <view class="order-item">
+          <view class="order-header" ontap="bshowOrderDetailInfo" data-id="{{item.id}}">
+            <text>订单编号:</text>
+            <text class="order-no-txt">{{item.order_no}}</text>
+          </view>
+          <view class="order-main" ontap="bshowOrderDetailInfo" data-id="{{item.id}}">
+            <view class="item-left">
+              <image src="{{picBaseUrl}}{{item.snap_img}}"></image>
+            </view>
+            <view class="item-middle">
+              <view>{{item.snap_name}}</view>
+              <view>{{item.total_count}}件商品</view>
+              <view style="white-space: nowrap;" wx:if="{{item.status==2}}">下单时间:{{item.create_time}}</view>
+              <view style="white-space: nowrap;" wx:if="{{item.status>=5}}">接单时间:{{stamp.parseTime(item.take_time,'datetime')}}</view>
+              <view style="white-space: nowrap;" wx:if="{{item.status>=5}}">预计完成时间时间:{{stamp.parseTime(item.dthink_time,'datetime')}}</view>
+            </view>
+            <view class="item-right">
+              <text class="order-status-txt unpay" wx:if="{{item.status==1}}">待付款</text>
+              <text class="order-status-txt payed" wx:if="{{item.status==2}}">已付款</text>
+              <text class="order-status-txt done" wx:if="{{item.status==5}}">已接单</text>
+              <text class="order-status-txt done" wx:if="{{item.status==7}}">已完成</text>
+            </view>
+          </view>
+          
+          <view class="order-bottom" wx:if="{{item.status==2}}">
+            <view class="order_act">
+              <view class="pay" ontap="rePay" data-id="{{item.id}}" data-index="{{index}}">接单</view>
+            </view>
+            
+          </view>   
+        </view>
+     
+      </block>
+
+      <view wx:if="{{orderArr.length>0 && isLoadedAll}}" class="to_bottom">--- 别扯了，到底啦！---</view>
+    </view>
+     
+    <!--右侧内容-->
+  
+
+</view>
+
+<view class="shoperInfo" wx:if="{{nav_act_content == 4}}">
+  
+<button bindtap="tobyhand" class="orangebutton">手动导单</button>
+<button bindtap="toedit0" class="orangebutton">修改类别</button>
+<button bindtap="toedit1" class="orangebutton" style="background-color: rgb(123, 177, 177);">修改商品</button>
+<button bindtap="toquik" class="orangebutton" style="background-color: rgb(123, 177, 177);">一键导单</button>
+ 
+
+  
+</view>
+
+<view class="mian-box"  wx:if="{{nav_act_content == 5}}" >
+
+<view class="tuijian_box">
+    <view class="tuijian_title">我是骑手·订单页面</view>
+</view>
+<!-- end 商家推荐 -->
+
+
+
+   
+  <view class="item-main">
+    <!-- 没有数据时候 -->
+     <view class="no_data" wx:if="{{qorderArr.length == 0}}">
+      <image src="../../imgs/icon/none.jpg"></image>
+     </view>
+      <block wx:for="{{qorderArr}}">
+        <view wx:if="{{item.status==5||item.status==6||item.status==7}}" class="order-item">
+          <view class="order-header">
+            <text>订单编号:</text>
+            <text class="order-no-txt">{{item.order_no}}</text>
+          </view>
+          <view  class="order-main" ontap="qshowOrderDetailInfo" data-id="{{item.id}}">
+            <view class="item-left">
+              <image src="{{picBaseUrl}}{{item.snap_img}}"></image>
+            </view>
+            <view class="item-middle">
+              <view>{{item.snap_name}}</view>
+              <view>{{item.total_count}}件商品</view>
+              <view style="white-space: nowrap;" wx:if="{{item.status==5}}">商家预计完成时间时间:{{stamp.parseTime(item.dthink_time,'datetime')}}</view>
+              <view style="white-space: nowrap;" wx:if="{{item.status==6}}">抢单时间:{{stamp.parseTime(item.qtake_time,'datetime')}}</view>
+              <view style="white-space: nowrap;" wx:if="{{item.status>=6}}">预计送达时间:{{stamp.parseTime(item.think_time,'datetime')}}</view>
+            </view>
+            <view class="item-right" style="display: block; white-space: nowrap; text-align: center; ">
+              <text class="order-status-txt done" wx:if="{{item.status==5}}">商家接单</text>
+              <text class="order-status-txt done"  wx:if="{{item.status==6}}">派送中</text>
+              <text class="order-status-txt done"  wx:if="{{item.status==7}}">已完成</text>
+            
+             
+            
+            </view>
+
+          </view> 
+
+          <view class="order-bottom" wx:if="{{item.status==5}}">
+            <view class="order_act">
+              <view class="pay" ontap="qrePay" data-id="{{item.id}}" data-index="{{index}}">抢单</view></view></view>   
+        </view>
+     
+      </block>
+
+      <view wx:if="{{orderArr.length>0 && isLoadedAll}}" class="to_bottom">--- 别扯了，到底啦！---</view>
+    </view>
+     
+    <!--右侧内容-->
+  
+
+</view>

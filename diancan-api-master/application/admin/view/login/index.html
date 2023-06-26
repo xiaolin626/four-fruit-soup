@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <link rel="stylesheet" href="__admin__/plugins/layui/css/layui.css">
+    <style>
+        .tplay-login-body {
+            min-width: 300px;
+            max-width: 400px;
+            min-height: 150px;
+            margin: 0 auto;
+            margin-top: 150px;
+        }
+    </style>
+</head>
+<body>
+<div class="tplay-login-body">
+    <form class="layui-form" id="">
+        <div class="layui-form-item">
+            <input type="text" name="username" lay-verify="required" placeholder="账户" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-item">
+            <input type="password" name="pwd" lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" name="vercode" placeholder="验证码" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-input-inline">
+                <img src="/captcha" class="layadmin-user-login-codeimg" height="39" width="200" onclick="this.src='/captcha?seed='+Math.random()" id="captcha">
+            </div>
+        </div>
+        <span class="layui-btn" lay-submit="" lay-filter="submit"  style="width: 100%">登入系统</span>
+    </form>
+</div>
+<script type="text/javascript" src="__admin__/plugins/jquery/jquery.min.js"></script>
+<script src="__admin__/plugins/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['laydate','form','layer'], function(){
+        var form = layui.form(),layer = layui.layer;
+        form.on('submit(submit)', function (data) {
+            loading =layer.load(1, {shade: [0.1,'#fff']});
+            $.post('/admin/login/login', data.field, function (res) {
+                console.log(res);
+                layer.close(loading);
+                if (res.code == 200) {
+                    layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                        location.href = "{:url('admin/index/index')}";
+                    });
+                }
+				 if (res.code == 300) {
+				     layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+				         location.href = "{:url('admin/index/dindex')}";
+				     });
+				 } 
+				 else {
+                    $('#captcha').click();
+                    layer.msg(res.msg, {time: 1800, icon: 2});
+                }
+            });
+
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

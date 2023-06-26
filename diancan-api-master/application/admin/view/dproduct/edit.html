@@ -1,0 +1,97 @@
+{extend name="layout" /}
+
+{block name="style"}
+<link rel="stylesheet" href="__admin__/plugins/upload.css">
+{/block}
+
+{block name="content"}
+    <div class="site-text site-block" style="margin: 15px">
+        <blockquote class="layui-elem-quote">
+            <h1>编辑商品</h1>
+        </blockquote>
+        <form class="layui-form" action="/admin/dproduct/updateProduct" method="post" enctype="multipart/form-data">
+
+            <input type="hidden" name="id" value="{$product.id}">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" required="required" value="{$product.name}" lay-verify="required" placeholder="请输入商品名称" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品价格</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="price" required="required" value="{$product.price}" lay-verify="required" placeholder="请输入商品价格" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品库存</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="stock" required="required" value="{$product.stock}" lay-verify="required" placeholder="请输入商品库存数量" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+
+        
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="formDemo">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+{/block}
+
+{block name="script"}
+<script src="__admin__/js/jquery-1.7.2.min.js"></script>
+<script src="__admin__/plugins/T_upload.js"></script>
+<script src="__admin__/js/mine.js"></script>
+    <script>
+        layui.use(['laydate','form'], function(){
+
+        });
+        $('#file').addImg({
+            target:'#logo-file-wrap',
+            size:2
+        });
+
+        $(document).on('mouseover','.add',function () {
+            layer.tips('点击添加属性',$(this),{
+                tips:[1,'#3595CC'],
+                time:2000
+            });
+        })
+        $(document).on('mouseover','.down',function () {
+            layer.tips('点击删除属性',$(this),{
+                tips:[1,'#ff0000'],
+                time:2000
+            });
+        })
+
+        $(document).on('click','.add',function () {
+            var demo = $('#demo').clone();
+            demo.removeAttr('id');
+            demo.removeAttr('style');
+            demo.find('.add').remove();
+            demo.find('input').attr('lay-verify','number');
+
+            var down = '<button style="margin-top: 3px" class="down layui-btn layui-btn-primary layui-btn-small"><i class="layui-icon">&#xe640;</i></button>';
+            demo.find('#father').append(down);
+
+            $('#demo').before(demo);
+            return false;
+        })
+
+        $(document).on('click','.down',function () {
+            $(this).parent('div').remove();
+            return false;
+        })
+
+        
+    </script>
+{/block}

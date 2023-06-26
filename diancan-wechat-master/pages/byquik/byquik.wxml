@@ -1,0 +1,5 @@
+<!--pages/byquik/byquik.wxml-->
+<view class="top">
+<button bindtap="byQuikButton" class="orangebutton">导入</button>
+<button bindtap="submit" class="orangebutton">确定上传</button>
+</view>

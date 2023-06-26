@@ -1,0 +1,66 @@
+{
+  "pages": [
+
+    "pages/food/food",
+    "pages/product/product",
+    "pages/cart/cart",
+    "pages/my/my",
+    "pages/order/order",
+    "pages/border/border",
+    "pages/qorder/qorder",
+    "pages/byhand/byhand",
+    "pages/edit/edit",
+    "pages/byquik/byquik",
+    "pages/tomyself/tomyself",
+    "pages/pay-result/pay-result",
+    "pages/addressList/adressList",
+    "pages/myAddress/myAddress",
+    "pages/address/address",
+    "pages/login/login",
+    "pages/topass/topass",
+    "pages/register/register",
+    "pages/toCash/toCash",
+    "pages/tojoin/tojoin"
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#f68e35",
+    "backgroundColor": "#FFFFFF",
+    "backgroundTextStyle": "light",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/food/food",
+        "iconPath": "imgs/toolbar/category.png",
+        "selectedIconPath": "imgs/toolbar/category@selected.png",
+        "text": "点餐"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "iconPath": "imgs/toolbar/cart.png",
+        "selectedIconPath": "imgs/toolbar/cart@selected.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/tojoin/tojoin",
+        "iconPath": "imgs/toolbar/joinus.png",
+        "selectedIconPath": "imgs/toolbar/joinus@selected.png",
+        "text": "加入我们"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "imgs/toolbar/my.png",
+        "selectedIconPath": "imgs/toolbar/my@selected.png",
+        "text": "我的"
+      }
+    ],
+    "backgroundColor": "#F5F5F5",
+    "selectedColor": "#f68e35",
+    "color": "#989898",
+    "borderStyle": "white",
+    "position": "bottom"
+  },
+  "sitemapLocation": "sitemap.json"
+}

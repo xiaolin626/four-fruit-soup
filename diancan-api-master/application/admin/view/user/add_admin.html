@@ -1,0 +1,90 @@
+{extend name="layout" /}
+
+{block name="content"}
+    <div class="site-text site-block" style="margin: 15px">
+        <blockquote class="layui-elem-quote">
+            {if $id eq 0}
+            <h1>添加供应商</h1>
+            {else/}
+            <h1>修改个人信息</h1>
+            {/if}
+        </blockquote>
+        {if $id eq 0}
+        <form class="layui-form" enctype="multipart/form-data">
+        {else/}
+            <form class="layui-form"  enctype="multipart/form-data">
+        {/if}
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" required="required" value="{$datas.username ?: ''}" lay-verify="required" placeholder="请输入用户名" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="pwd" required="required" value="{$datas.pwd ?: ''}" lay-verify="required" placeholder="请输入密码" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">电话</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="tel" required="required" value="{$datas.tel ?: ''}" lay-verify="" placeholder="请输入电话" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email"  value="{$datas.email ?: ''}" lay-verify="" placeholder="请输入邮箱" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">真实名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="realname"  value="{$datas.realname ?: ''}" lay-verify="" placeholder="请输入真实名" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <input type="hidden" name="id" value="{$id}">
+                    <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+{/block}
+
+{block name="script"}
+<script src="__admin__/js/mine.js"></script>
+    <script>
+        {if $id eq '0'}
+        var the_url = "{:url('addAdmin')}"
+        {else}
+        var the_url = "{:url('editAdmin')}"
+        {/if}
+        layui.use(['laydate','form','layer'], function(){
+            var form = layui.form(),layer = layui.layer;
+            form.on('submit(submit)', function (data) {
+                loading =layer.load(1, {shade: [0.1,'#fff']});
+                $.post(the_url, data.field, function (res) {
+                    console.log(res);
+                    layer.close(loading);
+                    if (res.code == 200) {
+                        layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                            location.href = "{:url('admin')}";
+                        });
+                    } else {
+                        layer.msg(res.msg, {time: 1800, icon: 2});
+                    }
+                });
+
+                return false;
+            });
+        });
+
+    </script>
+{/block}

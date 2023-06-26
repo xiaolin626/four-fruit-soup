@@ -1,0 +1,70 @@
+.none {
+	display: none;
+}
+
+/* ===================================== */
+.thead-list {
+	border: 2px solid #E6E6E6;
+	border-bottom: 0;
+	white-space: nowrap;
+    font-weight: 900;
+    line-height: 36px;
+}
+.clearfix:after {
+	content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.table-list {
+	border: 2px solid #E6E6E6;
+	border-bottom: 0;
+	list-style: none;
+}
+.table-td {
+	display: inline-block;
+	text-align: center;
+	padding: 12px 0;
+}
+.table-list-2 .table-list {
+	background: #f1f2f7;
+}
+.table-list-3 .table-list {
+	background: #f7f7f7;
+}
+.table-list-2 .table-list,.table-list-3 .table-list {
+	border-left: 0;
+	border-right: 0;
+}
+.table-list-2 .table-list .table-td-first {
+	margin-left: 3%;
+	width: 16%;
+	border-left: 2px dashed #E6E6E6;
+}
+.table-list-3 .table-list .table-td-first {
+	margin-left: 6%;
+	width: 13%;
+	border-left: 2px dashed #E6E6E6;
+}
+.level1:nth-last-child(1){
+	border-bottom: 2px solid #E6E6E6;
+}
+.th-5 {
+	width: 5%;
+}
+.th-10 {
+	width: 9%;
+}
+.th-15 {
+	width: 14%;
+}
+.th-20 {
+	width: 19%;
+}
+.th-25 {
+	width: 24%;
+}
+.th-30 {
+	width: 29%;
+}

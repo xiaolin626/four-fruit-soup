@@ -1,0 +1,181 @@
+{extend name="layout" /}
+
+{block name="content"}
+<style>
+    .bs-bars{
+        width:100%;
+    }
+</style>
+<div style="margin: 15px;">
+    <blockquote class="layui-elem-quote">
+        <h1>下架列表</h1>
+    </blockquote>
+    <fieldset class="layui-elem-field">
+        <legend>查询条件</legend>
+        <form action="" class="layui-form">
+            <div class="layui-form-item" style="width: 90%;">
+                <div class="layui-inline">
+                    <select name="category_id" lay-verify="" id="category_id">
+                        <option value="0">请选择分类</option>
+                        {volist name="category" id="vo"}
+                        <option value="{$vo.id}" {if $category_id eq $vo.id} selected {/if}>{$vo.name}</option>
+                        {/volist}
+                    </select>
+                </div>
+                <button id="searchSubmit" class="layui-btn">
+                    <i class="fa fa-search" data-icon="fa-search"></i>
+                    查询
+                </button>
+            </div>
+        </form>
+    </fieldset>
+
+    <div id="toolbar">
+        <a style="float:right;margin-right: 10px" href="/admin/product/add" class="layui-btn layui-btn-normal">添加商品</a>
+        <button id="refresh" class="layui-btn">
+            <i class="fa fa-refresh" data-icon="fa-refresh"></i>
+            刷新表格
+        </button>
+        <div class="layui-input-inline" style="width: 60px">
+            <input id="page" class="layui-input" type="number" value="1" min="1" max="10">
+        </div>
+        <button id="selectPage" class="layui-btn">跳页</button>
+
+    </div>
+    <table id="table"
+           data-toggle="table"
+           data-height="460"
+           data-toolbar="#toolbar"
+           data-pagination="true"
+           data-side-pagination="server"
+           data-page-size="20"
+           data-ajax="ajaxRequest">
+        <thead>
+        <tr>
+            <th data-field="id">id</th>
+            <th data-field="category.name">商品分类</th>
+            <th data-field="name">商品名称</th>
+            <th data-field="main_img_url" data-formatter="img">商品图片</th>
+
+            <th data-field="price">价格</th>
+            <th data-field="stock">库存</th>
+            <th data-field="seller_num">已售卖</th>
+            <th data-field="" data-formatter="formAction">操作</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    var $page = $('#page'),
+        $button = $('#selectPage'),
+        $refresh = $('#refresh');
+    $refresh.click(function(){
+        $table.bootstrapTable('refresh');
+    });
+    $button.click(function () {
+        $table.bootstrapTable('selectPage', +$page.val());
+    });
+
+    var $table = $('#table');
+    
+    function sex(value,row,index) {
+        if( value === 1 ){
+            return '男';
+        }else{
+            return '女'
+        }
+    }
+
+    function formAction(value,row,index) {
+        var name = "'"+row.name+"'";
+        return  '<a onclick="to_shangjia('+row.id+')">上架</a>';
+    }
+
+    function img(value,row,index) {
+        return '<img src="'+value+'" width="30px"></img>'
+    }
+
+
+    function to_shangjia(id){
+        layer.confirm('你确定要上架此商品么?', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.post("{:url('able')}",{id:id},function (mes) {
+                if(mes.code === 200){
+                    layer.alert(mes.msg);
+                    layer.closeAll();
+                    $table.bootstrapTable('refresh',$page.val());
+                }
+            },'json')
+        });
+    }
+
+    $('#searchSubmit').click(function(){
+       var category_id =  $("#category_id").val();
+       window.location.href = '{:url("all",array("category_id"=>'+category_id+'))}';
+    });
+    //请求数据
+    function getData(data){
+        var json;
+        var form = $('.layui-form').find('input,select');
+        var len = form.length;
+        var req = {};
+        for(var i = 0; i < len; i++){
+            var key = form.eq(i).attr('name');
+            var val = form.eq(i).val();
+            req[key] = val;
+        }
+        req.limit = data.limit;
+        req.offset = data.offset;
+        var category_id = getQueryVariable('category_id');
+        req.category_id = category_id;
+        req.status = 10;
+        $.ajax({
+            type:"post",
+            url:"/admin/product/getProductAll",
+            data:req,
+            dataType:"json",
+            async:false,
+            success:function(res){
+                json = res;
+            }
+        });
+        return json;
+    }
+    function ajaxRequest(params){
+        console.log(params);
+        //得到数据
+        var json = getData(params.data);
+        //分配数据
+        params.success({
+            total:json.data.total,
+            rows:json.data.list
+        });
+    }
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return 0;
+    }
+
+    layui.use(['form', 'laydate'], function() {
+        var form = layui.form(),
+            layer = layui.layer,
+            laydate = layui.laydate;
+
+        form.on('select(country)',function(data){
+            listenSelect(form,data)
+        });
+
+    });
+
+</script>
+{/block}

@@ -1,0 +1,164 @@
+<!--pages/tojoin/tojoin.wxml-->
+<!--初始界面-->
+<view class="bigview"  wx:if="{{role==0 &&etest==0 && astatus==0}}">
+<view class="flex" style="width: 100%;">
+<button bindtap="betaker" class="debuton">我要当骑手</button>
+
+<button bindtap="bebuilder" class="debuton">我要当店长</button>
+</view>
+
+
+<image class="dpic" src="/imgs/deyellow.png"></image>
+
+
+</view>
+<!--骑手申请-->
+<view wx:if="{{role==0  &&etest==1&& astatus==0}}">
+
+<view class="flex" style="margin-top: 45rpx;">
+<text class="etext">真实姓名</text>
+<input class="vinput" value="{{ nickName }}" placeholder="请输入真实姓名"  bindinput="NameChange" ></input>
+</view>
+
+<view class="flex" style="margin-top: 45rpx;">
+<text class="etext">真实电话</text>
+<input class="vinput" value="{{nickphone }}" placeholder="请输入联系电话"  bindinput="PhoneChange" ></input>
+</view>
+<view style="margin-top: 25rpx;">
+<view style="margin-top: 25rpx;">
+<text class="etext">上传本人身份证正反页</text></view>
+
+<view class="imgContant">
+<view style="display: flex;">
+  <image wx:if="{{idfronttag==0}}" bindtap='selectIdfront' mode="scaleToFill" src="http://linzer626.com/images/身份证正面.png" class="leftimgs" ></image>
+  <image wx:if="{{idfronttag==1}}" bindtap='selectIdfront' mode="scaleToFill"  src="{{img1}}" class="leftimgs"></image>
+  
+  <image wx:if="{{idbacktag==0}}" bindtap='selectIdback'mode="scaleToFill" src="http://linzer626.com/images/身份证背面.png" class="rightimgs" ></image>
+  <image wx:if="{{idbacktag==1}}" bindtap='selectIdback' mode="scaleToFill"  src="{{img2}}" class="rightimgs"></image>
+  </view>
+  
+
+  <text class="etext" style="margin-top: 25rpx;text-align: left;">上传商家营业执照</text>
+  <image wx:if="{{blicence==0}}" bindtap='selectBslicence'mode="scaleToFill" src="http://linzer626.com/images/身份证背面.png" class="middleimgs" ></image>
+  <image wx:if="{{blicence==1}}" bindtap='selectBslicence' mode="scaleToFill"  src="{{img3}}" class="middleimgs"></image>
+
+  
+    </view>
+</view>
+
+<button disabled="{{nickname==0&&nickphone==0&&img1==0&&img2==0&&img3==0}}" class="hl_ebutton" bindtap="Bossubmit">提交</button>
+  <button  class="ebutton" bindtap="goback">返回</button>
+</view>
+<!--店长申请-->
+<view wx:if="{{role==0  &&etest==2&& astatus==0}}">
+
+<view class="flex" style="margin-top: 75rpx;">
+<text class="etext">真实姓名</text>
+<input class="vinput" value="{{ nickName }}" placeholder="请输入真实姓名"  bindinput="NameChange" ></input>
+</view>
+
+<view class="flex" style="margin-top: 75rpx;">
+<text class="etext">真实电话</text>
+<input class="vinput" value="{{nickphone }}" placeholder="请输入联系电话"  bindinput="PhoneChange" ></input>
+</view>
+<view >
+<view style="margin-top: 25rpx;">
+<text class="etext">上传本人身份证正反页</text></view>
+
+<view class="imgContant">
+<view style="display: flex;">
+  <image wx:if="{{idfronttag==0}}" bindtap='selectIdfront' mode="scaleToFill" src="http://linzer626.com/images/身份证正面.png" class="leftimgs" ></image>
+  <image wx:if="{{idfronttag==1}}" bindtap='selectIdfront' mode="scaleToFill"  src="{{img1}}" class="leftimgs"></image>
+  <image wx:if="{{idbacktag==0}}" bindtap='selectIdback'mode="scaleToFill" src="http://linzer626.com/images/身份证背面.png" class="rightimgs" ></image>
+  <image wx:if="{{idbacktag==1}}" bindtap='selectIdback' mode="scaleToFill"  src="{{img2}}" class="rightimgs"></image></view>
+    </view>
+</view>
+
+<button disabled="{{nickname==0&&nickphone==0&&img1==0&&img2==0}}" class="hl_ebutton" bindtap="Dispatchersubmit">提交</button>
+  <button  class="ebutton" bindtap="goback">返回</button>
+</view>
+<!--审核状态 申请中-->
+<view wx:if="{{role==0  && astatus==1}}">
+
+  <view class="flex flex-direction_column justify_content">
+    <image mode="widthFix" class="forimgs" src="http://linzer626.com/images/审核记录.png" ></image>
+<text class="boldtext font_bold textalign" style=" font-size: large;">认证审核中</text>
+<text class="graytext textalign" >您的审核在3-5个工作日完成，请耐心等待</text>
+<button bindtap="gogeren" class="button_check  top block">进入个人中心</button>
+</view>
+
+
+</view>
+<!--审核状态 失败-->
+<view wx:if="{{role==0 && astatus==2}}">
+  <view class="flex flex-direction_column justify_content">
+    <image mode="widthFix" class="forimgs" src="http://linzer626.com/images/审核记录1.png" ></image>
+<text class="boldtext font_bold textalign" style=" font-size: large;">认证失败</text>
+<text class="graytext textalign" >请查看申请信息并重新申请</text>
+<button bindtap="askagain" class="button_check  top block">重新申请</button>
+</view>
+</view>
+<!--店长列表界面-->
+<view wx:if="{{role==1 }}" class="grayback">
+  <view wx:if="{{orderArr.length>0}}" wx:for="{{orderArr}}" wx:key="{{index}}">
+    <view   class="billview">
+  <view data-id="{{item.id}}" class="billviewtop" ontap="qshowOrderDetailInfo">
+  {{item.order_no}}
+  </view>
+  <view data-id="{{item.buser_id}}" class="billviewtop" ontap="toCallPhone">
+  点此拨打客户电话
+  </view>
+  <image data-status="{{item.status}}" data-id="{{item.id}}" class='{{item.id==buttonTrue?"forbuttondown":"forbuttonup"}}'  bindtap="changebutton">
+  </image>
+ <view  wx:if="{{item.id==buttonTrue}}"
+ animation="{{animationData}}"
+  class="outView">
+  <van-steps
+  steps="{{ steps }}"
+  active="{{  orderType }}"
+  active-icon="success"
+  active-color="#38f"
+/>
+ </view>
+    </view> 
+    <view style="margin-top: 30rpx;"></view>
+</view>
+
+
+
+</view>
+<!--骑手列表界面-->
+
+<view wx:if="{{role==2 }}" class="grayback" >
+
+<view wx:if="{{qorderArr.length>0}}" wx:for="{{qorderArr}}" wx:key="{{index}}">
+  <view   class="billview">
+  <view data-id="{{item.id}}" class="billviewtop" ontap="qshowOrderDetailInfo">
+  {{item.order_no}}
+  </view>
+  <view data-id="{{item.buser_id}}" class="billviewtop" ontap="toCallPhone">
+  点此拨打客户电话
+  </view>
+  <image data-status="{{item.status}}" data-id="{{item.id}}" class='{{item.id==buttonTrue?"forbuttondown":"forbuttonup"}}'  bindtap="changebutton">
+  </image>
+ <view  wx:if="{{item.id==buttonTrue}}"
+ animation="{{animationData}}"
+  class="outView">
+  <van-steps
+  steps="{{ steps }}"
+  active="{{  orderType }}"
+  active-icon="success"
+  active-color="#38f"
+/>
+ </view>
+    </view> 
+    <view style="margin-top: 30rpx;"></view>
+</view>
+
+<view class="empty_tip"  wx:if="{{orderList.length==0}}">
+<van-empty  image="http://linzer626.com/images/empty.png" description="暂无订单" />
+</view>
+</view>
+
+
+

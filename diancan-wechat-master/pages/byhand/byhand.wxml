@@ -1,0 +1,32 @@
+<!--mine/personalData/personalData.wxml-->
+
+
+<view class="beview">
+  <text class="betext">菜品名称</text>
+<input class="fieldview"  value="{{ name }}" placeholder="菜品名称"  bindinput="nickNameChange" ></input>
+</view>
+<view class="beview">
+  <text class="betext">价格</text>
+<input class="fieldview"  value="{{ price }}" placeholder="输入价格/单品"  bindinput="psdChange" ></input>
+</view>
+
+<view class="beview">
+  <text class="betext">库存量</text>
+<input class="fieldview"  value="{{ stock }}" placeholder="有多少库存"  bindinput="mobileChange" ></input>
+</view>
+
+<view class="beview">
+
+    <van-cell title="类别" class="content_c"  border="{{ false }}" title-style="font-size: 28rpx;font-family: PingFang SC;font-weight: 500;color: #999999;" is-link>
+  <picker bindchange="watchSite" range="{{categoryTypeArr}}" range-key="{{'name'}}">
+    <view class="picker">
+      {{categoryTypeArr[site].name}}
+    </view>
+  </picker>
+    </van-cell>
+</view>
+
+
+
+
+<button bindtap="toIssue"   class="savebutton">导入</button>

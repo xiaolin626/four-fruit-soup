@@ -1,0 +1,11 @@
+
+
+<view class='login_block' >
+  <view><span class="iconfont icon-geren"></span><input type='text' placeholder="请输入手机号" bindinput='inputUsr' class='input'></input></view>
+  <view><span class="iconfont icon-mima1"></span><input password='true' placeholder="请输入密码" bindinput='inputPwd'class='input'></input></view>
+  <view><span class="iconfont icon-mima1"></span><input password='true' placeholder="请再次输入密码" bindinput='rinputPwd'class='input'></input></view>
+
+  <button type='primary' bindtap='confirmPwd' class="confirm" >确定注册</button>
+
+</view>
+

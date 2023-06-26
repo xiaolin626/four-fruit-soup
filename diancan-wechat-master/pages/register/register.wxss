@@ -1,0 +1,45 @@
+/* pages/login/index.wxss */
+page{
+  background-color: rgb(123, 177, 177);
+}
+
+.login_block{
+  position: absolute;
+  left: 0;right: 0;top: 0;bottom: 0;
+  display:flex;
+  justify-content: center;
+  flex-direction: column;
+
+  width: 86vw;
+  height: 50vh;
+  background-color: white;
+  margin: auto;
+  padding: 3vh 3vh;
+  border: 1px solid rgb(202, 201, 201);
+  border-radius: 20px;
+}
+
+.login_block .input{
+    border:none;
+    border-bottom: 1px solid #000000;
+    margin: 2vh 2vh;
+}
+.flex
+{
+  display: flex;
+}
+.login_block .confirm{
+    height: 8vh;
+    width:40vw;
+    line-height: 8vh;
+    margin-top: 4vh;
+    background-color: rgb(123, 177, 177);
+
+}
+.welcome{
+    display: flex;
+    color: azure;
+    justify-content: center;
+    margin-top: 5vh;
+}
+

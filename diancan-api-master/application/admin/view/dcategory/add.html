@@ -1,0 +1,115 @@
+{extend name="layout" /}
+
+{block name="content"}
+    <div class="site-text site-block" style="margin: 15px">
+        <blockquote class="layui-elem-quote">
+            <h1>添加分类</h1>
+        </blockquote>
+        <form class="layui-form" enctype="multipart/form-data">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" required="required" value="" lay-verify="required" placeholder="请输入分类名称" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类图片</label>
+                <div class="layui-box layui-upload-button" >
+                    <input id="file" type="file" accept="" name="topic_img" class="layui-upload-file">
+                    <span class="layui-upload-icon"><i class="layui-icon"></i>上传图片</span>
+                    <input type="hidden" name="thumb" id="thumb" value="">
+                </div>
+                <div style="display: inline-block; margin-left: 15px">
+                    仅支持小于<span style="color: red">2M</span>的图片  尺寸建议接近13:5【如600*280】
+                </div>
+                <div id="logo-file-wrap">
+                    <img src="" alt="" id="adPic">
+                </div>
+            </div>
+
+           <!-- <div class="layui-form-item">
+                <label class="layui-form-label">缩略图</label>
+                <input type="hidden" name="thumb" id="thumb" value="">
+                <div class="layui-input-block">
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn layui-btn-primary" id="adBtn"><i class="icon icon-upload3"></i>点击上传</button>
+                        <div class="layui-upload-list">
+                            <img class="layui-upload-img" id="adPic" src="">
+                            <p id="demoText"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">分类描述</label>
+                <div class="layui-input-block">
+                    <textarea name="description" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+{/block}
+
+{block name="script"}
+<script src="__admin__/js/mine.js"></script>
+    <script>
+        layui.use(['layer','form','upload'], function(){
+
+            var layer = layui.layer,form = layui.form();
+
+            form.on('submit(submit)', function (data) {
+                loading =layer.load(1, {shade: [0.1,'#fff']});
+                $.post('/admin/category/addCategory', data.field, function (res) {
+                    layer.close(loading);
+                    if (res.code == 200) {
+                        layer.msg(res.msg, {time: 1800, icon: 1}, function () {
+                            location.href = "{:url('all')}";
+                        });
+                    } else {
+                        layer.msg(res.msg, {time: 1800, icon: 2});
+                    }
+                });
+
+                return false;
+            });
+
+
+            //普通图片上传
+            layui.upload({
+                url: '/admin/Upfiles/upload'
+                ,before: function(obj){
+                    //返回的参数item，即为当前的input DOM对象
+
+                    layer.msg('文件上传中',{zIndex:20180509});
+                }
+                ,success: function(result){
+                    var res = JSON.parse(result);
+                    if(res.code == '200'){
+                        layer.msg(res.msg,{zIndex:20180510});
+                        $("#thumb").val(res.url);
+                    }else{
+                        layer.msg(res.msg,{zIndex:20180510});
+                    }
+                }
+
+            });
+
+
+        });
+        $('#file').addImg({
+            target:'#logo-file-wrap',
+            size:2
+        });
+    </script>
+{/block}

@@ -1,0 +1,219 @@
+{extend name="layout" /}
+
+{block name="content"}
+<style>
+    .bs-bars{
+        width:100%;
+    }
+</style>
+<div style="margin: 15px;">
+    <blockquote class="layui-elem-quote">
+        <h1>商品列表</h1>
+    </blockquote>
+    <fieldset class="layui-elem-field">
+        <legend>查询条件</legend>
+        <form action="" class="layui-form">
+            <div class="layui-form-item" style="width: 90%;">
+                <div class="layui-inline">
+                    <select name="category_id" lay-filter="category_id" id="category_id" >
+                        <option value="0">请选择分类</option>
+                        {volist name="category" id="vo"}
+                        <option value="{$vo.id}" {if $category_id eq $vo.id} selected {/if}>{$vo.name}</option>
+                        {/volist}
+                    </select>
+                </div>
+                <div class="layui-inline">
+                    <select name="recommend" lay-filter="recommend" id="recommend" >
+                        <option value="-1">请选择状态</option>
+                        <option value="0" {if $recommend eq 0}selected {/if}>未推荐</option>
+                        <option value="1" {if $recommend eq 1}selected {/if}>已推荐</option>
+                    </select>
+                </div>
+
+                <button id="searchSubmit" class="layui-btn">
+                    <i class="fa fa-search" data-icon="fa-search"></i>
+                    查询
+                </button>
+            </div>
+        </form>
+    </fieldset>
+
+    <div id="toolbar">
+		<a style="float:right;margin-right: 10px" href="/admin/product/suadd" class="layui-btn layui-btn-normal">一键添加商品</a>
+		
+        <a style="float:right;margin-right: 10px" href="/admin/product/add" class="layui-btn layui-btn-normal">手动添加商品</a>
+        <button id="refresh" class="layui-btn">
+            <i class="fa fa-refresh" data-icon="fa-refresh"></i>
+            刷新表格
+        </button>
+        <div class="layui-input-inline" style="width: 60px">
+            <input id="page" class="layui-input" type="number" value="1" min="1" max="10">
+        </div>
+        <button id="selectPage" class="layui-btn">跳页</button>
+
+    </div>
+    <table id="table"
+           data-toggle="table"
+           data-height="960"
+           data-toolbar="#toolbar"
+           data-pagination="true"
+           data-side-pagination="server"
+           data-page-size="20"
+           data-ajax="ajaxRequest">
+        <thead>
+        <tr>
+            <th data-field="id">id</th>
+            <th data-field="category.name">商品分类</th>
+            <th data-field="name">商品名称</th>
+            <th data-field="main_img_url" data-formatter="img">商品图片</th>
+
+            <th data-field="price">价格</th>
+            <th data-field="stock">库存</th>
+            <th data-field="seller_num">已售卖</th>
+            <th data-field="" data-formatter="do_recommed">推荐</th>
+            <th data-field="" data-formatter="formAction">操作</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    var $page = $('#page'),
+        $button = $('#selectPage'),
+        $refresh = $('#refresh');
+    $refresh.click(function(){
+        $table.bootstrapTable('refresh');
+    });
+    $button.click(function () {
+        $table.bootstrapTable('selectPage', +$page.val());
+    });
+
+    var $table = $('#table');
+    
+    function sex(value,row,index) {
+        if( value === 1 ){
+            return '男';
+        }else{
+            return '女'
+        }
+    }
+
+    function formAction(value,row,index) {
+        var name = "'"+row.name+"'";
+        var html = '<a href="/admin/product/edit?id='+row.id+'">编辑</a>' +
+            '&nbsp;&nbsp;&nbsp;' +
+            '<a onclick="to_xiajia('+row.id+')">下架</a>';
+        if(row.recommend == 0){
+             html = html + '&nbsp;&nbsp;&nbsp;<a href="/admin/product/recommend?recommend=1&id='+row.id+'">设置推荐</a>';
+        }else{
+             html = html + '&nbsp;&nbsp;&nbsp;<a href="/admin/product/recommend?recommend=0&id='+row.id+'">取消推荐</a>';
+        }
+        return html;
+    }
+
+    function do_recommed(value,row,index) {
+        if(row.recommend == 0){
+            var html = '<font><a href="/admin/product/recommend?recommend=1&id='+row.id+'">未推荐</a></font>';
+        }else{
+            var html = '<font color="red"><a style="color:red;" href="/admin/product/recommend?recommend=0&id='+row.id+'">已推荐</a></font>';
+        }
+        return html;
+    }
+
+    function img(value,row,index) {
+        return '<img src="'+value+'" width="30px"></img>'
+    }
+
+
+    function to_xiajia(id){
+        layer.confirm('你确定要下架此商品么?', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.post("{:url('delete')}",{id:id},function (mes) {
+                if(mes.code === 200){
+                    layer.alert(mes.msg);
+                    layer.closeAll();
+                    $table.bootstrapTable('refresh',$page.val());
+                }
+            },'json')
+        });
+    }
+
+
+    $('#searchSubmit').click(function(){
+       var category_id =  $("#category_id").val();
+       var recommend =  $("#recommend").val();
+       window.location.href = '{:url("all",array("category_id"=>'+category_id+',"recommend"=>'+recommend+'))}';
+    });
+    //请求数据
+    function getData(data){
+        var json;
+        var form = $('.layui-form').find('input,select');
+        var len = form.length;
+        var req = {};
+        for(var i = 0; i < len; i++){
+            var key = form.eq(i).attr('name');
+            var val = form.eq(i).val();
+            req[key] = val;
+        }
+        req.limit = data.limit;
+        req.offset = data.offset;
+        var category_id = getQueryVariable('category_id');
+        var recommend = getQueryVariable('recommend');
+        req.recommend = recommend;
+        req.category_id = category_id;
+        req.status = 5;
+        $.ajax({
+            type:"post",
+            url:"/admin/product/getProductAll",
+            data:req,
+            dataType:"json",
+            async:false,
+            success:function(res){
+                json = res;
+            }
+        });
+        return json;
+    }
+    function ajaxRequest(params){
+        console.log(params);
+        //得到数据
+        var json = getData(params.data);
+        //分配数据
+        params.success({
+            total:json.data.total,
+            rows:json.data.list
+        });
+    }
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        if(variable == 'recommend')
+            return -1;
+        else
+            return 0;
+    }
+
+    layui.use(['form', 'laydate'], function() {
+        var form = layui.form(),
+            layer = layui.layer,
+            laydate = layui.laydate;
+
+       /* form.on('select(category_id)',function(data){
+            // listenSelect(form,data)
+            console.log(data);
+            $("#recommend").find("option").remove();
+            form.render('select');
+        });*/
+
+    });
+
+</script>
+{/block}

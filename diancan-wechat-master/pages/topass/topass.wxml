@@ -1,0 +1,16 @@
+
+
+<view class='login_block' >
+  <view><span class="iconfont icon-geren"></span><input type='text' placeholder="请输入手机号" bindinput='inputUsr' class='input'></input></view>
+  <view><span class="iconfont icon-mima1"></span><input type="{{inputType}}" id="pwd" placeholder="请输入密码" bindinput='inputPwd'class='input'></input>
+   <image class="eye" src="http://linzer626.com/images/eye-fill.png" bindtap="seeTap" wx:if="{{show_pass}}"/>
+     <image class="eye" src="http://linzer626.com/images/no_eye.png" bindtap="seeTap" wx:else/>
+  
+  </view>
+  <view class="flex">
+  <button type='primary' bindtap='register' class="confirm">注册</button>
+
+  <button type='primary' bindtap='confirmPwd' class="confirm" style="background-color:rgb(248, 188, 97)">确定</button>
+</view>
+</view>
+

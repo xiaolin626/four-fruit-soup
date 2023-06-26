@@ -1,0 +1,543 @@
+/* pages/tojoin/tojoin.wxss */
+
+.debuton
+{
+ background-color: #a3a3a3;
+ color: white;
+  z-index: 1;
+  margin-top: 50%;
+  margin-left: 75rpx;
+  width:250rpx;
+  height: 150rpx;
+  text-align: center;
+  line-height: 150rpx;
+  font-size: 30rpx;
+}
+.flex
+{
+  display: flex;
+
+}
+.block
+{
+  display: block;
+}
+.rightimgs
+{
+  width: 289rpx; height:160rpx;margin-top: 25rpx;margin-left: 50rpx;
+}
+.leftimgs
+{
+ width: 289rpx; height:160rpx;margin-top: 25rpx;margin-left: 5%;
+}
+.middleimgs
+{
+  align-items: center;justify-content: center;margin-left: 5%;
+  position: relative; width: 640rpx; height:160rpx;margin-top: 25rpx;
+}
+.imgContant {
+  display: flex;
+  flex-direction: column;
+  
+}
+.dpic
+{
+
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;/*垂直居中*/
+  justify-content: center;/*水平居中*/
+
+}
+.bigview
+{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;/*垂直居中*/
+  justify-content: center;/*水平居中*/
+}
+.hl_ebutton
+{
+  background-color: #f8d568;
+  color: white;
+   z-index: 1;
+   margin-top: 60rpx;
+   justify-items: center;
+   width:550rpx;
+   height: 150rpx;
+   text-align: center;
+   line-height: 150rpx;
+   font-size: 30rpx;
+}
+.ebutton
+{
+  background-color: #a3a3a3;
+  color: white;
+   z-index: 1;
+   margin-top: 60rpx;
+   justify-items: center;
+   width:550rpx;
+   height: 150rpx;
+   text-align: center;
+   line-height: 150rpx;
+   font-size: 30rpx;
+}
+.etext
+{
+ 
+  color: #a3a3a3;
+  margin-left: 5%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.vinput
+{
+  border-radius: 10rpx;
+  color: #a3a3a3;
+  border: 1rpx solid #a3a3a3;
+  margin-left: 5%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* pages/test1/test1.wxss */
+.font_24
+{
+  font-size: 24rpx;
+}
+.font_28
+{
+  font-size: 28rpx;
+}
+.font_32
+{
+  font-size: 32rpx;
+}
+.imgview
+{
+  width: 695rpx; height: 580rpx; display: block; box-sizing: border-box;
+
+  margin-left: 28rpx;
+  border-radius: 10rpx;
+}
+.mask{
+  width: 100%;
+  height: 200%;
+  background-color: rgba(56, 55, 55, 0.651);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index:2;
+  opacity: 0;
+}
+.dimg
+{
+  width: 310rpx;
+height: 180rpx;
+
+border-radius: 10rpx;
+}
+.dtextview
+{
+  width: 201rpx;
+
+font-size: 32rpx;
+font-weight: 500;
+line-height: 42rpx;
+}
+.middletext
+{
+  margin-top: 38rpx;
+}
+.middleleft
+{
+  margin-left: 18rpx;
+}
+.starview
+{
+  margin-left: 21rpx;
+  margin-top: 31rpx;
+  position:absolute;
+}
+.idtext
+{
+  margin-left: 31rpx;
+
+}
+.leftimgs
+{
+  position: relative;margin-left: 22rpx; width: 289rpx; height:158rpx;margin-top: 25rpx;
+}
+.rightimgs
+{
+  position: absolute;right: 40rpx; width: 289rpx; height:158rpx;margin-top: 25rpx;
+}
+.button_check
+{
+  position: relative;
+  line-height: 32px;
+  vertical-align: middle;
+  color: #FFFFFF;
+  white-space: nowrap;
+  width: 320rpx;
+  height: 80rpx;
+  background: linear-gradient(180deg, #EE9829, #FCBA65);
+  border-radius: 10rpx;
+  margin-left: 215rpx;
+}
+.graytext
+{
+ 
+font-size: 28rpx;
+margin-top: 35rpx;
+font-weight: 400;
+color: #666666;
+}
+.graytexts
+{
+  width: 413rpx;
+  height: 62rpx;
+  word-break: break-all;
+  margin-left: 168rpx;
+  line-height: 36rpx;
+font-size: 28rpx;
+margin-top: 35rpx;
+font-weight: 400;
+color: #666666;
+}
+.forimgs
+{
+  width: 160rpx;
+height: 160rpx;
+margin-top: 130rpx;
+margin-left: 295rpx;
+border-radius: 50%;
+}
+.boldtext
+{
+
+font-size: 36rpx;
+margin-top: 90rpx;
+font-weight: 500;
+color: #111111;
+}
+.top
+{
+margin-top: 5%;
+}
+.left
+{
+margin-left: 5%;
+}
+.flex-direction
+{
+  flex-direction: row;
+}
+.flex-direction_column
+{
+  flex-direction: column;
+}
+.justify_content
+{
+  justify-content: center;
+}
+.left_40
+{
+  margin-left: 40%;
+}
+.left_15
+{
+  margin-left: 15%;
+}
+.left_32
+{
+  margin-left: 32.5%;
+}
+.left_25
+{
+  margin-left: 25%;
+}
+.textalign
+{
+  text-align: center;
+}
+.top_15
+{
+  margin-top: 15%;
+}
+.redstar
+{
+color: red;
+}
+.orangestar
+{
+color: #EE9829;
+}
+.font_bold
+{
+  font-weight: bold;
+}
+.bitleft
+{
+  margin-left: 2%;
+}
+.bittop
+{
+  margin-top: 2%;
+}
+.redtext
+{
+  color: red;
+}
+.textback
+{
+  background-color:#FFFFFF;
+}
+
+.textview
+{
+  height:100rpx; width:695rpx; margin-left: 28rpx;border-radius: 10rpx;
+}
+.textor
+{
+  margin-left: 18rpx;margin-top: 24rpx;
+}
+.atextor
+{
+  margin-left: 58rpx;margin-top: 32rpx;
+}
+.whitespace
+{
+  white-space: nowrap;
+}
+
+.block
+{
+  display: block;
+}
+.flex
+{
+  display: flex;
+}
+.green {
+  color: #2ccb98;
+}
+.check_size
+{
+  zoom: 60%;
+}
+.buttoncheck
+{
+  margin-top: 20rpx;border: 1rpx solid ;
+  color: white; background: linear-gradient(180deg, #EE9829, #FCBA65);
+  border-radius: 10px;
+}
+.buttondefalt
+{
+  width: 650rpx;
+  height: 100rpx;
+  margin-top: 20rpx;
+  background-color: none;
+ color: #333;
+border: 1rpx solid ;
+border-radius: 10px;
+}
+
+.liner
+{
+ border: 1rpx solid #BBBBBB;
+
+}
+.empty_tip{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;/*垂直居中*/
+  justify-content: center;/*水平居中*/
+}
+.icon_field {
+  width: 12rpx;
+  height: 12rpx;
+  background: #faba09;
+  border-radius: 50%;
+  margin-right: 21rpx;
+  margin-top: 18rpx;
+}
+.icons {
+  width: 12rpx;
+  height: 12rpx;
+  background: #333;
+  border-radius: 50%;
+  margin-right: 21rpx;
+  margin-top: 18rpx;
+}
+.buttonview
+{
+  margin-top: 2%;margin-left: 15%;
+  white-space: nowrap; color: white; font-size: 25rpx; justify-content: center; align-items: center; width: 165rpx; height: 55rpx; display: flex; box-sizing: border-box;  position: relative
+}
+.jiedanbuttonview1
+{
+  margin-right: 2.5%;
+  margin-left: 2.5%;
+  margin-top: 2.5%;
+  white-space: nowrap;
+  color: white; font-size: 25rpx; justify-content: center; align-items: center; width: 156rpx; height: 58rpx; display: flex; box-sizing: border-box;  position: relative
+}
+.jiedanbuttonview2
+{
+ 
+  margin-left: 2%;white-space: nowrap;margin-top: 2.5%;
+  background-color: black; color: orange; font-size: 25rpx; justify-content: center; align-items: center; width: 156rpx; height: 58rpx; display: flex; box-sizing: border-box;  position: relative
+}
+.buttonfree
+{
+  background: -webkit-linear-gradient(top,#fab36d,#f8a450,#fa9f45);
+}
+.mask{
+  width: 100%;
+  height: 200%;
+  background-color: rgba(56, 55, 55, 0.651);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index:1;
+}
+.windows{
+  width: 200px;
+  height: 200px;
+  
+  position: absolute;
+  left: 75px;
+  top: 100px;
+  z-index: 999;
+}
+.whiteback
+{
+  background-color: white;
+}
+.grayback
+{
+  height: 1000vh;
+  background-size: 100% 100%;
+  background-color:#F5F5F5;
+    background-attachment:scroll;
+
+}
+ 
+.mask{
+  width: 100%;
+  height: 200%;
+  background-color: rgba(56, 55, 55, 0.651);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index:1;
+}
+.windows{
+
+  position: absolute;
+  
+  z-index: 999;
+}
+
+.graytext
+{
+  color: gray; position: relative; left: 36rpx; top: 19rpx
+}
+.changebutton
+{
+  position: relative; width: 35rpx; height: 35rpx; left: 385rpx; top: 23rpx
+}
+.topbackground
+{
+  border-radius: 20rpx; position: relative; width: 671rpx; height: 200rpx; margin-left: 5%;margin-top: 5%; display: flex; box-sizing: border-box
+}
+.singleview
+{
+  width: 300rpx; height: 195rpx; display: block; box-sizing: border-box
+}
+.goldtext
+{
+  color: rgb(255, 174, 0); position: relative; font-size: 45rpx;
+}
+.nextviewtext
+{
+  font-weight: 550; font-size: 30rpx;position: relative;
+}
+.nexttabber
+{
+  margin-top: 5%;
+}
+.billview
+{
+  min-height: 231rpx;
+  top: 30rpx;
+  background-color: white; border-radius: 15rpx; position: relative;margin-left: 5%; width: 687rpx; display: flex; flex-direction: column;  box-sizing: border-box
+}
+.billviewtop
+{
+ margin-top: 30rpx;
+  margin-left: 15rpx;
+}
+.forbuttondown
+{
+  background-position: center;
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-image: url(http://linzer626.com/images/下拉.png);
+ 
+  width: 50rpx;
+  height: 40rpx;
+  position: absolute;
+  right: 15rpx;
+  bottom: 15rpx;
+}
+.forbuttonup
+{
+  background-position: center;
+    background-size:cover;
+    background-repeat: no-repeat;
+  background-image: url(http://linzer626.com/images/上拉.png);
+  
+  width: 50rpx;
+  height: 40rpx;
+  position: absolute;
+  right: 15rpx;
+  bottom: 15rpx;
+}
+.outView
+{
+  padding: 80rpx;
+min-height: 40rpx;
+height: 100rpx;
+
+animation-name: example;
+  animation-duration: 0.5s;
+}
+@keyframes example {
+  0%   { padding: 20rpx;}
+  25%   { padding: 40rpx;}
+  50%  { padding: 60rpx;}
+  75%   { padding: 80rpx;}
+  100% {padding: 100rpx;}
+}
+
+.statusImage
+{
+  background-position: center;
+  background-size:cover;
+  background-repeat: no-repeat;
+background-image: url(http://linzer626.com/images/上拉.png);
+}
+
+

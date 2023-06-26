@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>外卖点餐后台·管理员端</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="format-detection" content="telephone=no">
+
+		<link rel="stylesheet" href="__admin__/plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="__admin__/css/global.css" media="all">
+		<link rel="stylesheet" href="__admin__/plugins/font-awesome/css/font-awesome.min.css">
+		<style>
+			.layui-nav-child dd {
+				padding-left: 10px;
+			}
+			.login_out dd{padding-left: 0px;}
+		</style>
+	</head>
+
+	<body>
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-header header header-demo">
+				<div class="layui-admin">
+					<div class="admin-login-box">
+						<a class="logo" style="left: 0;" href="">
+							<span style="font-size: 15px;padding-left: 15px;color: #fff;">外卖点餐后台·管理员端</span>
+						</a>
+						<div class="admin-side-toggle">
+							<i class="fa fa-bars" aria-hidden="true"></i>
+						</div>
+					</div>
+					<ul class="layui-nav admin-header-item">
+						<li class="layui-nav-item">
+							<a href="javascript:;">清除缓存</a>
+						</li>
+						<!--<li class="layui-nav-item">
+							<a href="javascript:;">浏览网站</a>
+						</li> -->
+						<li class="layui-nav-item">
+							<a href="javascript:;" class="admin-header-user">
+								<span>
+									{:session('admin_info.username')}
+								</span>
+							</a>
+							<dl class="layui-nav-child login_out">
+								<!-- <dd>
+									<a href="javascript:;"><i class="fa fa-user-circle" aria-hidden="true"></i> 个人信息</a>
+								</dd>
+								<dd>
+									<a href="javascript:;"><i class="fa fa-gear" aria-hidden="true"></i> 设置</a>
+								</dd> -->
+								<dd>
+									<a href="{:url('login/logout')}"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a>
+								</dd>
+							</dl>
+						</li>
+					</ul>
+					<ul class="layui-nav admin-header-item-mobile">
+						<li class="layui-nav-item">
+							<a href=""><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="layui-side layui-bg-black" id="admin-side">
+				<div class="layui-side-scroll" id="admin-navbar-side" lay-filter="side">
+					<ul class="layui-nav layui-nav-tree">
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon" data-icon=""></i><cite>用户管理</cite>
+								<span class="layui-nav-more"></span>
+							</a>
+							<dl class="layui-nav-child">
+								<dd><a href="/admin/user/admin" target="main_frame" data-url="/admin/user/admin"><i class="layui-icon" data-icon=""></i><cite>后台人员列表</cite></a></dd>
+								<dd><a href="/admin/user/all" target="main_frame" data-url="/admin/user/all"><i class="layui-icon" data-icon=""></i><cite>用户列表</cite></a></dd>
+							</dl>
+						</li>
+
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon" data-icon="icon-lifebuoy"></i><cite>分类管理</cite><span class="layui-nav-more"></span>
+							</a>
+							<dl class="layui-nav-child">
+								<dd><a href="/admin/category/all" target="main_frame" data-url="/admin/category/all"><i class="layui-icon" data-icon=""></i><cite>分类列表</cite></a></dd>
+								<dd><a href="/admin/category/disable" target="main_frame" data-url="/admin/category/disable"><i class="layui-icon" data-icon=""></i><cite>下架列表</cite></a></dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon" data-icon=""></i><cite>商品管理</cite><span class="layui-nav-more"></span>
+							</a>
+							<dl class="layui-nav-child">
+								<dd><a href="/admin/product/all" target="main_frame" data-url="/admin/product/all"><i class="layui-icon" data-icon=""></i><cite>商品列表</cite></a></dd>
+								<dd><a href="/admin/product/disable" target="main_frame" data-url="/admin/product/disable"><i class="layui-icon" data-icon=""></i><cite>下架列表</cite></a></dd>
+							</dl>
+						</li>
+
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon" data-icon=""></i><cite>订单管理</cite><span class="layui-nav-more"></span>
+							</a>
+							<dl class="layui-nav-child">
+								<dd><a href="/admin/order/all" target="main_frame" data-url="/admin/order/all"><i class="layui-icon" data-icon=""></i><cite>已付订单</cite></a></dd>
+								<dd><a href="/admin/order/nopay" target="main_frame" data-url="/admin/order/nopay"><i class="layui-icon" data-icon=""></i><cite>未付订单</cite></a></dd>
+							</dl>
+						</li>
+						
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon" data-icon=""></i><cite>提现管理</cite><span class="layui-nav-more"></span>
+							</a>
+							<dl class="layui-nav-child">
+								<dd><a href="/admin/cash/all" target="main_frame" data-url="/admin/cash/all"><i class="layui-icon" data-icon=""></i><cite>未审核提现订单</cite></a></dd>
+								<dd><a href="/admin/cash/other" target="main_frame" data-url="/admin/cash/other"><i class="layui-icon" data-icon=""></i><cite>已审核提现订单</cite></a></dd>
+							</dl>
+						</li>
+						
+	<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon" data-icon=""></i><cite>审核管理</cite><span class="layui-nav-more"></span>
+							</a>
+							<dl class="layui-nav-child">
+								<dd><a href="/admin/requests/all" target="main_frame" data-url="/admin/requests/all"><i class="layui-icon" data-icon=""></i><cite>所有订单</cite></a></dd>
+							    <dd><a href="/admin/requests/other" target="main_frame" data-url="/admin/requests/other"><i class="layui-icon" data-icon=""></i><cite>已审订单</cite></a></dd>
+							
+							</dl>
+						</li>
+						
+						<li class="layui-nav-item">
+							<a href="javascript:;">
+								<i class="layui-icon" data-icon=""></i><cite>系统设置</cite><span class="layui-nav-more"></span>
+							</a>
+							<dl class="layui-nav-child">
+								<dd><a href="/admin/system/config" target="main_frame" data-url="/admin/system/config"><i class="layui-icon" data-icon=""></i><cite>站点配置</cite></a></dd>
+								
+								<dd><a href="/admin/system/banner" target="main_frame" data-url="/admin/system/banner"><i class="layui-icon" data-icon=""></i><cite>Banner设置</cite></a></dd>
+							</dl>
+						</li>
+
+						<span class="layui-nav-bar" style="height: 0px; top: 157.5px; opacity: 0;"></span>
+					</ul>
+
+				</div>
+			</div>
+			<div class="layui-body" style="bottom: 0;" id="admin-body">
+				<div class="layui-tab admin-nav-card layui-tab-brief" lay-filter="admin-tab">
+					<ul class="layui-tab-title">
+						<li class="layui-this">
+							<i class="fa fa-home" aria-hidden="true"></i>
+							<a href="{:url('index/main')}" target="main_frame" style="color: #fff;" id="to_home">首页</a>
+						</li>
+					</ul>
+					<div class="layui-tab-content" style="min-height: 150px; padding: 5px 0 0 0;">
+						<div class="layui-tab-item layui-show">
+							<iframe  name="main_frame" src="{:url('index/main')}"></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="site-tree-mobile layui-hide">
+				<i class="layui-icon">&#xe602;</i>
+			</div>
+			<div class="site-mobile-shade"></div>
+			<script type="text/javascript" src="__admin__/plugins/jquery/jquery.min.js"></script>
+			<script type="text/javascript" src="__admin__/plugins/layui/layui.js"></script>
+			<script type="text/javascript" src="__admin__/datas/nav.js" ></script>
+			<script src="__admin__/js/index.js"></script>
+
+
+			<script>
+				setTimeout(function (){
+					$("#to_home").click();
+					$("#to_home").click();
+				},1000)
+
+
+			</script>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!--shop/drawCash/drawCash.wxml-->
+<view wx:if="{{test==0}}" class="con">
+  <view class="item">
+    <view>
+     
+      <view class="cash pt_30">
+        <view class="txt mb_30 color_111">
+          提现金额
+        </view>
+        <view class="flex money">
+          <text class="moneys">￥</text>
+          <input class="feild" type="number" placeholder="" value="{{money}}" bindinput="bindKeyInput" />
+        </view>
+
+        <view class="mr_30 txt1" wx:if="{{money!=''&&money*1>cantake_money}}">
+          <text class="orange">输入金额超过可提现金额</text>
+        </view>
+        <view class="mr_30 txt1" wx:if="{{money!=''&&money*1<min_withdraw}}">
+          <text class="orange">输入金额低于最低提现金额</text>
+        </view>
+        <view class="pr_30 tips border_t" wx:if="{{money == ''||money*1<=cantake_money}}">
+          <text class="tips">可提现金额 ￥{{cantake_money}}，</text>
+          <text class="orange" bindtap="getAllMoney">全部提现</text>
+        </view>
+        <button 
+        class="{{(money==''||money*1<min_withdraw||money*1>cantake_money)===false?'buttoncheck':'buttondefalt'}}"  bindtap="appletMemberWithdraw" custom-style="height: 80rpx;font-size: 36rpx;line-height:80rpx;margin-bottom:30rpx; " disabled="{{money==''||money*1<min_withdraw||money>cantake_money}}">提现</button>
+      </view>
+    </view>
+  </view>
+  <view class="txt mrtb_30 mt_30 left_50">
+    <view>提现说明：</view>
+    <view>
+      <view>1. 本提现为线下转账提现</view>
+      <view>2. 每次提现最低不低于{{min_withdraw}}元</view>
+      <view>3. 提现提交客服人员将核实提现资料，核实无误将转账完成本次 提现 </view>
+      <view>4. 信息核实有误，客服人员将拒绝本次提现并解除冻结收益，您 可再次发起提现</view>
+
+    </view>
+  </view>
+
+
+</view>
+
+<!--提现审核界面-->
+<view wx:if="{{test==1}}">
+    <view class="flex flex-direction_column justify_content">
+    <image mode="widthFix" class="forimgs" src="https://api.laosaihu.com.cn/static/upload/img/审核记录.png" ></image>
+<text class="boldtext font_bold textalign" style=" font-size: large;">提现审核中</text>
+<text class="graytext textalign" >提交的审核将在1-2个工作日完成，请耐心等待</text>
+<button bindtap="goback" class="button_check  top block">返回个人信息</button>
+</view>
+</view>
